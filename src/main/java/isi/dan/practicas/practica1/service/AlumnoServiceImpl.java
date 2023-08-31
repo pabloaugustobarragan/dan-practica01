@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import isi.dan.practicas.practica1.dao.AlumnoDao;
 import isi.dan.practicas.practica1.exception.RecursoNoEncontrado;
 import isi.dan.practicas.practica1.model.Alumno;
 import isi.dan.practicas.practica1.model.Curso;
@@ -19,6 +20,7 @@ public class AlumnoServiceImpl implements AlumnoService {
     // public static List<Alumno> listaAlumnos = new ArrayList<>();
 
     @Autowired private MemoryDB memoryDB;
+    @Autowired private AlumnoDao alumnoDao;
 
     public AlumnoServiceImpl() {
         
@@ -29,6 +31,7 @@ public class AlumnoServiceImpl implements AlumnoService {
         if ( a.getId() == null || a.getId() <= 0 ) {
             a.setId(memoryDB.nextIdAlumno());
             memoryDB.getAlumnos().add(a);
+            alumnoDao.insert(a);
         } else {
             OptionalInt indexOpt = IntStream.range(0, memoryDB.getAlumnos().size())
                 .filter(i -> memoryDB.getAlumnos().get(i).getId().equals(a.getId()))
