@@ -10,5 +10,4 @@ public class MiConfig {
     public MemoryDB miBeanFactory() {
         return new MemoryDB();
     }
-    
 }
